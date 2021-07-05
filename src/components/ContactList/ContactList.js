@@ -6,7 +6,8 @@ import s from './ContactList.module.css';
 const ContactList = ({ contacts, deleteContact }) => {
   return (
     <ul className={s.list}>
-      <ElementContactList contacts={contacts} deleteContact={deleteContact} />
+      {/* <ElementContactList contacts={contacts} deleteContact={deleteContact} /> */}
+      <ElementContactList />
     </ul>
   );
 };

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import s from './ContactForm.module.css';
+import contactsAction from 'components/redux/contacts-actions';
 
 class ContactForm extends Component {
   static defaultProps = {
@@ -83,4 +85,8 @@ class ContactForm extends Component {
   }
 }
 
-export default ContactForm;
+const mapDispatchToProps = dispatch => ({
+  onSubmit: (name, number) => dispatch(contactsAction.addContact(name, number)),
+});
+
+export default connect(null, mapDispatchToProps)(ContactForm);

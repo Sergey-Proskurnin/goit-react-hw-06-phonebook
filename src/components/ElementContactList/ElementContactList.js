@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import s from './ElementContactList.module.css';
+import contactsAction from 'components/redux/contacts-actions';
 
 const ElementContactList = ({ contacts, deleteContact }) => {
   return contacts.map(({ name, number, id }) => {
@@ -19,5 +21,12 @@ const ElementContactList = ({ contacts, deleteContact }) => {
     );
   });
 };
+const mapStateToProps = state => ({
+  contacts: state.contacts.items,
+});
 
-export default ElementContactList;
+const mapDispatchToProps = dispatch => ({
+  deleteContact: id => dispatch(contactsAction.deleteContact(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ElementContactList);
