@@ -21,8 +21,19 @@ const ElementContactList = ({ contacts, deleteContact }) => {
     );
   });
 };
-const mapStateToProps = state => ({
-  contacts: state.contacts.items,
+
+const getVisibleContacts = (contacts, filter) => {
+  const normalizedFilter = filter.toLowerCase().trim();
+
+  return contacts.filter(
+    contact =>
+      contact.name.toLowerCase().includes(normalizedFilter) ||
+      contact.number.includes(filter),
+  );
+};
+
+const mapStateToProps = ({ contacts: { items, filter } }) => ({
+  contacts: getVisibleContacts(items, filter),
 });
 
 const mapDispatchToProps = dispatch => ({

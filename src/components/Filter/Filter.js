@@ -1,5 +1,8 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { connect } from 'react-redux';
+
+import contactsAction from 'components/redux/contacts-actions';
 
 import s from './Filter.module.css';
 
@@ -20,4 +23,12 @@ const Filter = ({ filter, onChangeFilter }) => {
   );
 };
 
-export default Filter;
+const mapStateToProps = state => ({
+  filter: state.contacts.filter,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onChangeFilter: e => dispatch(contactsAction.changeFilter(e.target.value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);
