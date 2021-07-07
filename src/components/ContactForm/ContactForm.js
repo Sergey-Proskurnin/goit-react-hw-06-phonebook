@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import s from './ContactForm.module.css';
-import contactsAction from 'components/redux/contacts-actions';
+import contactsAction from 'components/redux/contacts/contacts-actions';
 
 class ContactForm extends Component {
   static defaultProps = {

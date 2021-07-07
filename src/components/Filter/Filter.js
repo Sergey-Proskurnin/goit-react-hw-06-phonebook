@@ -1,8 +1,9 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import contactsAction from 'components/redux/contacts-actions';
+import contactsAction from 'components/redux/contacts/contacts-actions';
 
 import s from './Filter.module.css';
 
@@ -21,6 +22,11 @@ const Filter = ({ filter, onChangeFilter }) => {
       />
     </label>
   );
+};
+
+Filter.propTypes = {
+  filter: PropTypes.string,
+  onChangeFilter: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

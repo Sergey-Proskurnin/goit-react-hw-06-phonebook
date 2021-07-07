@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 
-import contactsTest from 'data/contactsTest.json';
-import parsedContacts from 'components/localStorage';
+import initialContacts from 'components/localStorage';
 import { createReducer } from '@reduxjs/toolkit';
-import contactsAction from 'components/redux/contacts-actions';
+import contactsAction from './contacts-actions';
+import stateItemNoRepeat from 'components/helpersReducer';
 
 // ----------------first-step-------------------
 // import types from './contacts-types';
+// import contactsTest from 'data/contactsTest.json';
+// import parsedContacts from 'components/localStorage';
 
 // const items = (
 //   state = parsedContacts ? parsedContacts : contactsTest,
@@ -47,29 +49,15 @@ import contactsAction from 'components/redux/contacts-actions';
 //----------------------------------------------------------------------
 
 // ---------------second-step--------------------------------------------
-const items = createReducer(parsedContacts ? parsedContacts : contactsTest, {
-  [contactsAction.addContact]: (state, action) => {
-    if (
-      state.some(
-        ({ name }) => name.toLowerCase() === action.payload.name.toLowerCase(),
-      )
-    ) {
-      alert(`${action.payload.name} is already in contacts`);
-      return [...state];
-    }
-    if (state.some(({ number }) => number === action.payload.number)) {
-      alert(`${action.payload.number} is already in contacts`);
-      return [...state];
-    }
 
-    return [action.payload, ...state];
-  },
+const items = createReducer(initialContacts, {
+  [contactsAction.addContact]: (state, action) =>
+    stateItemNoRepeat(state, action),
   [contactsAction.deleteContact]: (state, action) =>
     state.filter(({ id }) => id !== action.payload),
 });
-
 const filter = createReducer('', {
-  [contactsAction.changeFilter]: (state, action) => action.payload,
+  [contactsAction.changeFilter]: (_, action) => action.payload,
 });
 
 export default combineReducers({
