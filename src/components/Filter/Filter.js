@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import contactsAction from 'components/redux/contacts/contacts-actions';
+import contactsAction from 'redux/contacts/contacts-actions';
 
 import s from './Filter.module.css';
 
