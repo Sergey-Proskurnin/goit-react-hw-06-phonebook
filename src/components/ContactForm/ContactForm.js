@@ -30,10 +30,29 @@ class ContactForm extends Component {
     this.setState({ [name]: value });
   };
 
+  addNoRepeatContact = (state, contacts) => {
+    const { name, number } = state;
+    if (
+      contacts.some(
+        contacts => contacts.name.toLowerCase() === name.toLowerCase(),
+      )
+    ) {
+      alert(`${name} is already in contacts`);
+      return;
+    }
+    if (contacts.some(contacts => contacts.number === number)) {
+      alert(`${number} is already in contacts`);
+      return;
+    }
+
+    this.props.onSubmit(state);
+    this.reset();
+  };
+
   handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
-    this.reset();
+    const { contacts } = this.props;
+    this.addNoRepeatContact(this.state, contacts);
   };
 
   reset = () => {
@@ -85,8 +104,12 @@ class ContactForm extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  contacts: state.contacts.items,
+});
+
 const mapDispatchToProps = dispatch => ({
   onSubmit: (name, number) => dispatch(contactsAction.addContact(name, number)),
 });
 
-export default connect(null, mapDispatchToProps)(ContactForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

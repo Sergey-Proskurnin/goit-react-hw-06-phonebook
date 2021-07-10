@@ -3,12 +3,12 @@ import { combineReducers } from 'redux';
 import initialContacts from 'components/localStorage';
 import { createReducer } from '@reduxjs/toolkit';
 import contactsAction from './contacts-actions';
-import stateItemNoRepeat from 'components/helpersReducer';
 
 // ----------------first-step-------------------
 // import types from './contacts-types';
 // import contactsTest from 'data/contactsTest.json';
 // import parsedContacts from 'components/localStorage';
+// import stateItemNoRepeat from 'components/helpersReducer';
 
 // const items = (
 //   state = parsedContacts ? parsedContacts : contactsTest,
@@ -31,6 +31,8 @@ import stateItemNoRepeat from 'components/helpersReducer';
 
 //       return [payload, ...state];
 
+// // stateItemNoRepeat(state, action),
+
 //     case types.DELETE:
 //       return state.filter(({ id }) => id !== payload);
 //     default:
@@ -51,8 +53,7 @@ import stateItemNoRepeat from 'components/helpersReducer';
 // ---------------second-step--------------------------------------------
 
 const items = createReducer(initialContacts, {
-  [contactsAction.addContact]: (state, action) =>
-    stateItemNoRepeat(state, action),
+  [contactsAction.addContact]: (state, action) => [action.payload, ...state],
   [contactsAction.deleteContact]: (state, action) =>
     state.filter(({ id }) => id !== action.payload),
 });
